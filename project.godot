@@ -26,7 +26,7 @@ window/stretch/aspect="keep_width"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/wawem/godot/clips/test.avi"
+movie_writer/movie_file="C:/Users/wawem/godot/movies/case_opening.avi"
 movie_writer/fps=30
 
 [input_devices]
