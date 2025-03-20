@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://db1nvv7ladmf0"]
+
+[ext_resource type="Script" uid="uid://cei0rfxdmilrh" path="res://scenes_and_scripts/case.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://b32gwadafmurw" path="res://sprites/uncommon_green_250x250.png" id="2_be7x7"]
+[ext_resource type="Texture2D" uid="uid://cvrr66bn33id" path="res://sprites/rare_blue_250x250.png" id="3_gtdfo"]
+[ext_resource type="Texture2D" uid="uid://dqdw7mdv072o2" path="res://sprites/very_rare_purple_250x250.png" id="4_0rngr"]
+[ext_resource type="Texture2D" uid="uid://dfvavm0ng87vg" path="res://sprites/epic_red_250x250.png" id="5_mp5ci"]
+[ext_resource type="Texture2D" uid="uid://nrjcoldlntra" path="res://sprites/legendary_orange_250x250.png" id="6_0tmni"]
+[ext_resource type="Texture2D" uid="uid://b1340gqhtc6n8" path="res://sprites/sample-case_250x184.png" id="6_b0cy6"]
+
+[node name="Case" type="VBoxContainer"]
+offset_right = 250.0
+offset_bottom = 220.0
+theme_override_constants/separation = 8
+script = ExtResource("2")
+uncommon_items = Array[Texture2D]([ExtResource("2_be7x7")])
+rare_items = Array[Texture2D]([ExtResource("3_gtdfo")])
+very_rare_items = Array[Texture2D]([ExtResource("4_0rngr")])
+epic_items = Array[Texture2D]([ExtResource("5_mp5ci")])
+legendary_items = Array[Texture2D]([ExtResource("6_0tmni")])
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("6_b0cy6")
+stretch_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.47451, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Open Case"
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://dubc3cgup6yyp"]
+
+[ext_resource type="Script" uid="uid://3r0sb0l13sji" path="res://scenes_and_scripts/case_script.gd" id="1_dwqtm"]
+[ext_resource type="Texture2D" uid="uid://d3rkpxsut5e73" path="res://sprites/stick_6x250.png" id="2_dn4kv"]
+
+[node name="CaseOpening" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dwqtm")
+
+[node name="CaseScrollContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+layout_mode = 0
+offset_top = 174.0
+offset_right = 1024.0
+offset_bottom = 426.0
+tooltip_text = "Good luck!"
+
+[node name="ItemContainer" type="HBoxContainer" parent="CaseScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ItemCursor" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 509.0
+offset_top = 174.0
+offset_right = 515.0
+offset_bottom = 424.0
+texture = ExtResource("2_dn4kv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.09
+autostart = true
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -111.0
+offset_top = -98.0
+offset_right = 111.0
+offset_bottom = -40.0
+text = "OK"
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+pivot_offset = Vector2(125, 125)
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="Panel/Button" to="." method="_on_ButtonPanel_pressed"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpsoknrejpedb"]
+
+[ext_resource type="Script" uid="uid://bt7a1c1ba7ol0" path="res://scenes_and_scripts/case_list.gd" id="1_64t5o"]
+[ext_resource type="PackedScene" uid="uid://db1nvv7ladmf0" path="res://scenes_and_scripts/case.tscn" id="1_hnij2"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="CaseList" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -110.0
+offset_right = 252.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+script = ExtResource("1_64t5o")
+
+[node name="Case1" parent="CaseList" instance=ExtResource("1_hnij2")]
+layout_mode = 2
+
+[node name="Case2" parent="CaseList" instance=ExtResource("1_hnij2")]
+layout_mode = 2
