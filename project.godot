@@ -15,10 +15,6 @@ run/main_scene="uid://dpsoknrejpedb"
 config/features=PackedStringArray("4.4")
 config/icon="res://sprites/icon.png"
 
-[autoload]
-
-Save="*res://scenes_and_scripts/save.gd"
-
 [display]
 
 window/stretch/mode="2d"
