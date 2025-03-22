@@ -14,3 +14,8 @@ logs/
 .mono/
 data_*/
 mono_crash.*.json
+
+# Test scene and script ignore
+scenes_and_scripts/test.gd
+scenes_and_scripts/test.gd.uid
+scenes_and_scripts/test.tscn
