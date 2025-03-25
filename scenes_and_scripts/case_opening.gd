@@ -17,9 +17,9 @@ var result_index: int  = total_wheel_items - 2 # Index of the reward
 
 var wheel_timer: float = 0.0
 var wheel_duration: float = 5.0
-var wheel_initial_velocity: float = 2700
+var wheel_initial_velocity: float = 2900
 var wheel_velocity: float = wheel_initial_velocity
-var wheel_deceleration_factor: float = -1.1
+var wheel_deceleration_factor: float = -0.5
 var wheel_distance: float = 0.0
 
 func _ready() -> void:
@@ -38,23 +38,25 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	debug_info.text = "container scroll_h: %d \nwheel_velocity: %d \nTimer: %f" % [case_container.scroll_horizontal, wheel_velocity, wheel_timer]
 	# Limit by duration and max position on the wheel
-	if wheel_duration > wheel_timer:
+	# TODO we have to pick the landing spot in advance and adjust the speed to ensure timely landing
+	# TODO randomize the landing spot min-max
+	if wheel_duration > wheel_timer and case_container.scroll_horizontal not in range(8335, 8560): # TODO dynamic container max position:
 		wheel_timer += _delta
 	
-		if wheel_timer <= wheel_duration * 0.2:
-			wheel_distance += wheel_velocity * _delta
-		elif wheel_timer > wheel_duration * 0.2 and wheel_timer <= wheel_duration * 0.8:
-			wheel_velocity = wheel_initial_velocity * exp(wheel_deceleration_factor * (wheel_timer - wheel_duration * 0.2))
-			wheel_distance += wheel_velocity * _delta
-		elif wheel_timer > wheel_duration * 0.8 and case_container.scroll_horizontal > 8560: # TODO dynamic container max position
-			# should be around 15 pxl
-			if wheel_velocity > 5: # TODO minimum speed
-				wheel_velocity -= (wheel_timer - (wheel_duration * 0.8)) / wheel_duration * 0.2
+		if wheel_timer <= wheel_duration * 0.1:
+			wheel_velocity = wheel_velocity
+		if wheel_timer > wheel_duration * 0.1 and wheel_timer <= wheel_duration * 0.6:
+			wheel_velocity = wheel_initial_velocity \
+							* exp(wheel_deceleration_factor * (wheel_timer - wheel_duration * 0.1)) #= v_init * e^(k*t)
+		elif wheel_timer > wheel_duration * 0.6:
+			if wheel_velocity > 400: # TODO minimum speed
+				wheel_velocity -= wheel_velocity * (wheel_timer - (wheel_duration * 0.6)) / wheel_duration * 0.4
 			else:
-				wheel_velocity = 5
-			wheel_distance += wheel_velocity * _delta
+				wheel_velocity = 400
+		wheel_distance += wheel_velocity * _delta
 		
 		print("Timer: %f wheel_velocity: %f Distance: %f" % [wheel_timer, wheel_velocity, int(wheel_velocity * _delta)]) # TODO DEBUG
+		# Required as ScrollContainer property uses int and we lose precision
 		if int(wheel_distance) >= 1:
 			case_container.scroll_horizontal += int(wheel_distance)
 			wheel_distance = 0
