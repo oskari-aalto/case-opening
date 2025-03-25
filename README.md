@@ -7,4 +7,4 @@ Exploring case opening design with Godot
 
 
 ## Credits <br>
-Reference: https://github.com/mberkdemir/godot-casesimulator
+Inspired by https://github.com/mberkdemir/godot-casesimulator

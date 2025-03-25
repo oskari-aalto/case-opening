@@ -1,8 +1,13 @@
 ## TODO  
-Focus lense effect on wheel
+Skew wheel items
+Focus lense effect on wheel (Gaussian blur?)
 Fade in wheel elements
+Load only necessary textures for wheel
+Add randomness to the wheel timing and landing location
 Add reward scene
 Transition animation from spin-stop to reward scene
+Adjustable run time settings
+Improve loading of items for the wheel (don't need to load all the case item textures)
 
 ## CS2  
 Consumer Grade - White, doe not drop from cases, being distributed as the in-game rewards
