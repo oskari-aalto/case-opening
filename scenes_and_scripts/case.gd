@@ -4,7 +4,7 @@ extends VBoxContainer
 var case_opening = preload("res://scenes_and_scripts/case_opening.tscn")
 
 
-# Arrays of 2D textures. Representing the items available on each rarity tier
+# Arrays of 2D textures. Representing the items available on each rarity tiers
 @export var uncommon_items: Array[Texture2D]
 @export var rare_items: Array[Texture2D]
 @export var very_rare_items: Array[Texture2D]
@@ -42,6 +42,6 @@ func _ready():
 
 func _on_Button_pressed():
 	var opening_scene = case_opening.instantiate()
-	opening_scene.item_list = case_items
+	opening_scene.case_items = case_items
 	opening_scene.drop_chances = case_drop_chances
 	get_tree().get_root().add_child(opening_scene)
