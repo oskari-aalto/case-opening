@@ -40,28 +40,29 @@ func _process(_delta: float) -> void:
 	# Limit by duration and max position on the wheel
 	# TODO we have to pick the landing spot in advance and adjust the speed to ensure timely landing
 	# TODO randomize the landing spot min-max
+	# TODO possibly change to tween
+	wheel_timer += _delta
 	if wheel_duration > wheel_timer and case_container.scroll_horizontal not in range(8335, 8560): # TODO dynamic container max position:
-		wheel_timer += _delta
-	
+		
 		if wheel_timer <= wheel_duration * 0.1:
 			wheel_velocity = wheel_velocity
-		if wheel_timer > wheel_duration * 0.1 and wheel_timer <= wheel_duration * 0.6:
+		if wheel_timer > wheel_duration * 0.1 and wheel_timer <= wheel_duration * 0.5:
 			wheel_velocity = wheel_initial_velocity \
 							* exp(wheel_deceleration_factor * (wheel_timer - wheel_duration * 0.1)) #= v_init * e^(k*t)
-		elif wheel_timer > wheel_duration * 0.6:
-			if wheel_velocity > 400: # TODO minimum speed
-				wheel_velocity -= wheel_velocity * (wheel_timer - (wheel_duration * 0.6)) / wheel_duration * 0.4
+		elif wheel_timer > wheel_duration * 0.5:
+			if wheel_velocity > 350: # TODO minimum speed
+				wheel_velocity -= wheel_velocity * (wheel_timer - (wheel_duration * 0.5)) / wheel_duration * 0.5
 			else:
-				wheel_velocity = 400
+				wheel_velocity = 350
+
 		wheel_distance += wheel_velocity * _delta
-		
 		print("Timer: %f wheel_velocity: %f Distance: %f" % [wheel_timer, wheel_velocity, int(wheel_velocity * _delta)]) # TODO DEBUG
 		# Required as ScrollContainer property uses int and we lose precision
 		if int(wheel_distance) >= 1:
 			case_container.scroll_horizontal += int(wheel_distance)
 			wheel_distance = 0
-	else:
-		panel_result.get_node("TextureRect").texture = wheel_items[result_index].texture
+	if wheel_timer > (wheel_duration + 1):
+		panel_result.get_node("ResultItem").texture = wheel_items[result_index].texture
 		panel_result.show()
 
 
@@ -96,7 +97,7 @@ func _create_item(item_rarity) -> void:
 	item_container.add_child(img)
 
 
-func _on_ButtonPanel_pressed() -> void:
+func _on_PanelResultButton_pressed() -> void:
 	queue_free()
 
 
