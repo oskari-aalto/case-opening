@@ -1,10 +1,12 @@
 extends Control
 
+signal completed
 
+@onready var debug_info: Label = $DebugInfo
 @onready var case_container: ScrollContainer = $"CaseScrollContainer"
 @onready var item_container: HBoxContainer = $"CaseScrollContainer/ItemContainer"
+@onready var item_cursor: TextureRect = $ItemCursor
 @onready var panel_result: Panel = $PanelResult
-@onready var debug_info: Label = $DebugInfo
 
 
 var case_items: Dictionary = {}
@@ -61,10 +63,10 @@ func _process(_delta: float) -> void:
 		if int(wheel_distance) >= 1:
 			case_container.scroll_horizontal += int(wheel_distance)
 			wheel_distance = 0
-	if wheel_timer > (wheel_duration + 1):
-		panel_result.get_node("ResultItem").texture = wheel_items[result_index].texture
-		panel_result.show()
-
+	if wheel_timer > (wheel_duration + 0.2):
+		panel_result.appear(wheel_items[result_index].texture)
+		case_container.hide()
+		item_cursor.hide()
 
 
 func _choose_wheel_items(rng) -> void:
@@ -97,7 +99,8 @@ func _create_item(item_rarity) -> void:
 	item_container.add_child(img)
 
 
-func _on_PanelResultButton_pressed() -> void:
+func _on_panel_result_result_button_pressed() -> void:
+	completed.emit()
 	queue_free()
 
 

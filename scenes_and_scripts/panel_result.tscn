@@ -1,24 +1,29 @@
-[gd_scene format=3 uid="uid://x4frjpi1hf8i"]
+[gd_scene load_steps=2 format=3 uid="uid://x4frjpi1hf8i"]
+
+[ext_resource type="Script" uid="uid://b0e4l1j1p1bg" path="res://scenes_and_scripts/panel_result.gd" id="1_84ub0"]
 
 [node name="PanelResult" type="Panel"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_84ub0")
 metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.760999, 0.760999, 0.760999, 1)
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 1.0
@@ -40,4 +45,7 @@ offset_left = -125.0
 offset_top = -125.0
 offset_right = 125.0
 offset_bottom = 125.0
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(125, 125)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
