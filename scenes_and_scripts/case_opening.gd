@@ -21,6 +21,7 @@ var wheel_timer: float = 0.0
 var wheel_duration: float = 5.0
 var wheel_initial_velocity: float = 2900
 var wheel_velocity: float = wheel_initial_velocity
+var wheel_minimum_velocity: float = 350
 var wheel_deceleration_factor: float = -0.5
 var wheel_distance: float = 0.0
 
@@ -45,17 +46,11 @@ func _process(_delta: float) -> void:
 	# TODO possibly change to tween
 	wheel_timer += _delta
 	if wheel_duration > wheel_timer and case_container.scroll_horizontal not in range(8335, 8560): # TODO dynamic container max position:
-		
-		if wheel_timer <= wheel_duration * 0.1:
-			wheel_velocity = wheel_velocity
 		if wheel_timer > wheel_duration * 0.1 and wheel_timer <= wheel_duration * 0.5:
 			wheel_velocity = wheel_initial_velocity \
 							* exp(wheel_deceleration_factor * (wheel_timer - wheel_duration * 0.1)) #= v_init * e^(k*t)
-		elif wheel_timer > wheel_duration * 0.5:
-			if wheel_velocity > 350: # TODO minimum speed
-				wheel_velocity -= wheel_velocity * (wheel_timer - (wheel_duration * 0.5)) / wheel_duration * 0.5
-			else:
-				wheel_velocity = 350
+		elif wheel_timer > wheel_duration * 0.5 and wheel_velocity > wheel_minimum_velocity:
+			wheel_velocity -= wheel_velocity * (wheel_timer - (wheel_duration * 0.5)) / wheel_duration * 0.5
 
 		wheel_distance += wheel_velocity * _delta
 		print("Timer: %f wheel_velocity: %f Distance: %f" % [wheel_timer, wheel_velocity, int(wheel_velocity * _delta)]) # TODO DEBUG
@@ -63,7 +58,7 @@ func _process(_delta: float) -> void:
 		if int(wheel_distance) >= 1:
 			case_container.scroll_horizontal += int(wheel_distance)
 			wheel_distance = 0
-	if wheel_timer > (wheel_duration + 0.2):
+	elif wheel_timer > (wheel_duration + 0.2):
 		panel_result.appear(wheel_items[result_index].texture)
 		case_container.hide()
 		item_cursor.hide()
